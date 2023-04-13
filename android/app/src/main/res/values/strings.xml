@@ -1,0 +1,9 @@
+<resources>
+
+<string name="app_name">Karima PFE</string>
+<string name="facebook_app_id">946147663186903</string>
+<string name="fb_login_protocol_scheme">fb946147663186903</string>
+<string name="facebook_client_token">e2ef2874c6aa2270b6bec280b17b92c5</string>
+
+
+</resources>

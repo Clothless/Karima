@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "15071413771",
+    "project_id": "karima-pfe",
+    "storage_bucket": "karima-pfe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15071413771:android:b898e977f5c67d89d7a90e",
+        "android_client_info": {
+          "package_name": "com.example.karima"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "15071413771-ujcutcqgrqbjio5o0f1h2p8dikmcd473.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.karima",
+            "certificate_hash": "d17785808a8fc7f623d480b8be3ba05d1f955143"
+          }
+        },
+        {
+          "client_id": "15071413771-q0ba76q6ov11mvgng9jc25tsq95ht1ee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy5n0gq8CzJ_gLj0_2Xq1Pbi_Y-XaWzVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "15071413771-q0ba76q6ov11mvgng9jc25tsq95ht1ee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
