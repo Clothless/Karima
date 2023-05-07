@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../helper/extension.dart';
 
 class CartProductModel {
-  String productID, name, image, price;
-  int quantity;
+  String? productID, name, image, price;
+  int? quantity;
 
   CartProductModel({
     this.productID,

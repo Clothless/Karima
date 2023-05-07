@@ -10,7 +10,7 @@ import '../const.dart';
 import '../model/product_model.dart';
 
 class DetailsScreen extends StatelessWidget {
-  ProductModel model;
+  ProductModel? model;
 
   DetailsScreen({
     this.model,
@@ -25,7 +25,7 @@ class DetailsScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.4,
             child: Image.network(
-              model.image,
+              model!.image!,
               fit: BoxFit.fill,
               ),
           ),
@@ -37,7 +37,7 @@ class DetailsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomText(
-                      text: model.name,
+                      text: model!.name,
                       fontSize: 26,
                     ),
                     const SizedBox(height: 10,),
@@ -60,7 +60,7 @@ class DetailsScreen extends StatelessWidget {
                                 text: "Size",
                               ),
                               CustomText(
-                                text: model.size,
+                                text: model!.size,
                               ),
                             ],
                           ),
@@ -86,7 +86,7 @@ class DetailsScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5),
-                                  color: model.color,
+                                  color: model!.color,
                                 ),
                               )
                             ],
@@ -101,7 +101,7 @@ class DetailsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 15,),
                     CustomText(
-                      text: model.description,
+                      text: model!.description,
                       separator: 2.0,
                     ),
                   ],
@@ -121,14 +121,14 @@ class DetailsScreen extends StatelessWidget {
                         fontSize: 20,
                       ),
                       CustomText(
-                        text: "\$ ${model.price}",
+                        text: "\$ ${model!.price}",
                         fontSize: 26,
                         color: Colors.green.shade500,
                       ),
                     ],
                   ),
                   GetBuilder<CartViewModel>(
-                    init: Get.find(),
+                    init: CartViewModel(),
                     builder: (controller) => Container(
                       width: 140,
                       height: 50,
@@ -136,11 +136,11 @@ class DetailsScreen extends StatelessWidget {
                         onPress: () {
                           controller.addProduct(
                           CartProductModel(
-                            productID: model.productID,
-                            name: model.name,
-                            image: model.image,
+                            productID: model!.productID,
+                            name: model!.name,
+                            image: model!.image,
                             quantity: 1,
-                            price: model.price,
+                            price: model!.price,
                           )
                         );
                         },

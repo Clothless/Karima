@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:karima/core/view_model/profile_view_model.dart';
 import 'package:karima/views/auth/login_screen.dart';
+import 'package:karima/views/change_password_view.dart';
+import 'package:karima/views/edit_profile_view.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
@@ -13,143 +13,183 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ProfileViewModel>(
       init: ProfileViewModel(),
-      builder: (controller) => Scaffold(
-        body: Container(
-          padding: EdgeInsets.only(top: 50),
-          child: SingleChildScrollView(
+      builder: (controller) => controller.loading.value
+      ? const Center(child: CircularProgressIndicator())
+      : Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.only(top: 50,),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        height: 120,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 100,
                         width: 120,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          borderRadius: const BorderRadius.all(Radius.circular(100)),
                           image: DecorationImage(
-                            image: controller.userModel == null
-                            ? AssetImage('assets/images/item.png')
-                            : controller.userModel.pic,
-                            fit: BoxFit.fill,
+                            image: controller.userModel?.pic == ""
+                            ? NetworkImage(controller.userModel!.pic!, scale: 0.5) as ImageProvider
+                            : const AssetImage("assets/images/default-person.png",),
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
                             ),
                         ),
                       ),
-                      Column(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomText(
-                            text: controller.userModel.name,
-                            fontSize: 32,
+                            text: controller.userModel?.name!,
+                            fontSize: 26,
                           ),
                           CustomText(
-                            text: controller.userModel.email,
-                            fontSize: 24,
+                            text: controller.userModel?.email!,
+                            fontSize: 18,
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 100,),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      
-                    },
-                    child: ListTile(
-                      title: const CustomButton(
-                        text: "Edit Profile",
-                      ),
-                      leading: Image.asset("assets/images/google.png"),
-                      trailing: const Icon(
-                        Icons.navigate_next,
-                        color: Colors.black,
-                        ),
+                const SizedBox(height: 70,),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.to(EditProfilePage());
+                  },
+                  child: ListTile(
+                    title: const CustomButton(
+                      text: "Edit Profile",
+                      foreground: Colors.black,
+                      background: Colors.white,
                     ),
+                    leading: Image.asset("assets/images/user.png", fit: BoxFit.fill,),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                      ),
                   ),
                 ), const SizedBox(height: 20,),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      
-                    },
-                    child: ListTile(
-                      title: const CustomButton(
-                        text: "Shipping Address",
-                      ),
-                      leading: Image.asset("assets/images/google.png"),
-                      trailing: const Icon(
-                        Icons.navigate_next,
-                        color: Colors.black,
-                        ),
+                ElevatedButton(
+                  onPressed: () {
+                    
+                  },
+                  child: ListTile(
+                    title: const CustomButton(
+                      text: "Shipping Address",
+                      foreground: Colors.black,
+                      background: Colors.white,
                     ),
+                    leading: Image.asset("assets/images/fast.png"),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                      ),
                   ),
                 ), const SizedBox(height: 20,),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      
-                    },
-                    child: ListTile(
-                      title: const CustomButton(
-                        text: "Order History",
-                      ),
-                      leading: Image.asset("assets/images/google.png"),
-                      trailing: const Icon(
-                        Icons.navigate_next,
-                        color: Colors.black,
-                        ),
+                ElevatedButton(
+                  onPressed: () {
+                    
+                  },
+                  child: ListTile(
+                    title: const CustomButton(
+                      text: "Order History",
+                      foreground: Colors.black,
+                      background: Colors.white,
                     ),
+                    leading: Image.asset("assets/images/order-delivery.png"),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                      ),
                   ),
                 ), const SizedBox(height: 20,),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      
-                    },
-                    child: ListTile(
-                      title: const CustomButton(
-                        text: "Cards",
-                      ),
-                      leading: Image.asset("assets/images/google.png"),
-                      trailing: const Icon(
-                        Icons.navigate_next,
-                        color: Colors.black,
-                        ),
+                ElevatedButton(
+                  onPressed: () {
+                    
+                  },
+                  child: ListTile(
+                    title: const CustomButton(
+                      text: "Cards",
+                      foreground: Colors.black,
+                      background: Colors.white,
                     ),
+                    leading: Image.asset("assets/images/credit-card.png"),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                      ),
                   ),
                 ), const SizedBox(height: 20,),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      
-                    },
-                    child: ListTile(
-                      title: const CustomButton(
-                        text: "Notifications",
-                      ),
-                      leading: Image.asset("assets/images/google.png"),
-                      trailing: const Icon(
-                        Icons.navigate_next,
-                        color: Colors.black,
-                        ),
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          actionsAlignment: MainAxisAlignment.spaceBetween,
+                          title: const Text('Change Password?'),
+                          content: const Text('In order to change your password, We will ask you to login again, this way we make sure it\'s you!'),
+                            actions: [
+                              CustomButton(       
+                                onPress: () {
+                                  Get.back();
+                                },
+                                pad: 0.0,
+                                text: 'Cancel',
+                                fontsize: 12,
+                              ),
+                              CustomButton(       
+                                onPress: () {
+                                  controller.signOut();
+                                  Get.offAll(LoginScreen());
+                                },
+                                pad: 0.0,
+                                text: 'Continue',
+                                fontsize: 12,
+                              ),
+                          ],
+                        );
+                      }
+                    );
+                    
+                  },
+                  child: ListTile(
+                    title: const CustomButton(
+                      text: "Change Password",
+                      foreground: Colors.black,
+                      background: Colors.white,
                     ),
+                    leading: Image.asset("assets/images/padlock.png"),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                      ),
                   ),
                 ), const SizedBox(height: 20,),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      controller.signOut();
-                      Get.offAll(LoginScreen());
-                    },
-                    child: ListTile(
-                      title: const CustomButton(
-                        text: "Logout",
-                      ),
-                      leading: Image.asset("assets/images/google.png"),
+                ElevatedButton(
+                  onPressed: () {
+                    controller.signOut();
+                    Get.offAll(LoginScreen());
+                  },
+                  child: ListTile(
+                    title: const CustomButton(
+                      text: "Logout",
+                      foreground: Colors.black,
+                      background: Colors.white,
                     ),
+                    leading: Image.asset("assets/images/logout.png"),
+                    trailing: const Icon(
+                      Icons.logout,
+                      color: Colors.black,
+                      ),
                   ),
                 ), const SizedBox(height: 20,),
               ],
@@ -159,4 +199,7 @@ class ProfileView extends StatelessWidget {
       ),
     );
   }
+
+  
+
 }

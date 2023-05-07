@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:karima/views/auth/login_screen.dart';
-
+import 'package:karima/views/control_view.dart';
+import 'package:karima/views/home_view.dart';
+import '../../core/view_model/auth_view_model.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/widgets.dart';
@@ -18,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
 
 
   
-  get controller => null;
+  get controller => AuthViewModel();
 
   
   
@@ -92,14 +95,8 @@ class RegisterScreen extends StatelessWidget {
                   hint: "ibradzm@gmail.com",
                   color1: Colors.black,
                   color2: Colors.grey,
-                  onSave: (value){
-                    controller?.email = value;
-                  },
-                  validator: (value){
-                    if(value == null){
-                      print("Error");
-                    }
-                  },
+                  onSave: (value){},
+                  validator: (value){},
                   ),
                 const SizedBox(height: 40,),
                 CustomTextFormField(
@@ -121,11 +118,29 @@ class RegisterScreen extends StatelessWidget {
                 const SizedBox(height: 20,),
                 CustomButton(
                   onPress: () {
-                    Future.delayed(Duration.zero,(){
-                      _formkey.currentState.save();
-                      if(_formkey.currentState.validate()){
-                        if(controller.email != "" && controller.password != ""){
-                          controller.signUpWithEmailAndPassword(controller.email, controller.password);
+                    Future.delayed(Duration.zero,() async{
+                      _formkey.currentState!.save();
+                      if(_formkey.currentState!.validate()){
+                        if(email.text != "" && password.text != "") {
+                          try{
+                          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                            email: email.text,
+                            password: password.text
+                            ).then((value) async{
+                              controller.saveUser(value);
+                            },);
+                            Get.offAll(ControlView());
+                            }catch(e){
+                              Get.snackbar(
+                                'Error Creating a new account',
+                                e.toString(),
+                                colorText: Colors.black,
+                                snackPosition: SnackPosition.TOP,
+                              );
+                            }
+                        }
+                        else{
+                          print("Error: \nemail= " + controller.email);
                         }
                       }
                     });

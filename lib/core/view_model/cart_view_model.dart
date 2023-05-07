@@ -6,7 +6,7 @@ import 'package:karima/model/cart_product_model.dart';
 class CartViewModel extends GetxController{
 
   ValueNotifier<bool> get loading => _loading;
-  ValueNotifier<bool> _loading = ValueNotifier(false);
+  final ValueNotifier<bool> _loading = ValueNotifier(false);
 
 
   List<CartProductModel> _cartProductModel = [];
@@ -32,39 +32,49 @@ class CartViewModel extends GetxController{
 
   getTotalPrice(){
     for(int i=0; i < _cartProductModel.length; i++){
-      _totalPrice += (double.parse(_cartProductModel[i].price) * _cartProductModel[i].quantity);
+      _totalPrice += (double.parse(_cartProductModel[i].price!) * _cartProductModel[i].quantity!);
     }
     update();
   }
   
   addProduct(CartProductModel cartProductModel) async{
-    if(_cartProductModel.length == 0){
+    if(_cartProductModel.isEmpty){
       await dbHelper.insert(cartProductModel);
       _cartProductModel.add(cartProductModel);
-      _totalPrice += (double.parse(cartProductModel.price) * cartProductModel.quantity);
-    }
+      _totalPrice += (double.parse(cartProductModel.price!) * cartProductModel.quantity!);
+    }else{
+      int temp = 0;
+      await dbHelper.insert(cartProductModel);
       for(int i=0; i<_cartProductModel.length; i++){
         if(_cartProductModel[i].productID == cartProductModel.productID){
           incresaeQuantity(i);
+          temp = 1;
+          break;
         }
       }
-      await dbHelper.insert(cartProductModel);
-      _cartProductModel.add(cartProductModel);
-      _totalPrice += (double.parse(cartProductModel.price) * cartProductModel.quantity);
-    
+      if(temp == 0){
+        _cartProductModel.add(cartProductModel);
+        _totalPrice += (double.parse(cartProductModel.price!) * cartProductModel.quantity!);
+      }
+    }
+      
     update();
   }
 
   incresaeQuantity(int index) async{
-    _cartProductModel[index].quantity++;
-     _totalPrice += (double.parse(_cartProductModel[index].price));
+    _cartProductModel[index].quantity = _cartProductModel[index].quantity! + 1;
+     _totalPrice += (double.parse(_cartProductModel[index].price!));
      await dbHelper.updateProduct(_cartProductModel[index]);
      update();
   }
   decreaseQuantity(int index) async{
-    _cartProductModel[index].quantity--;
-     _totalPrice -= (double.parse(_cartProductModel[index].price));
+    if(_cartProductModel[index].quantity == 0){
+      return;
+    }else{
+    _cartProductModel[index].quantity = _cartProductModel[index].quantity! - 1;
+     _totalPrice -= (double.parse(_cartProductModel[index].price!));
      await dbHelper.updateProduct(_cartProductModel[index]);
+    }
      update();
   }
   

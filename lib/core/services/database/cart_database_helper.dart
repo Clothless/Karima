@@ -3,19 +3,18 @@ import 'package:karima/model/cart_product_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../../model/product_model.dart';
-
 class CartDatabaseHelper {
 
   CartDatabaseHelper._();
 
   static final CartDatabaseHelper db = CartDatabaseHelper._();
-  static Database _database;
+  static Database? _database;
 
-  Future<Database> get database async{
+  Future<Database?> get database async{
     if(_database != null) return _database;
 
     _database = await initDB();
+    return null;
   }
   
   initDB() async{
@@ -37,11 +36,11 @@ class CartDatabaseHelper {
   }
 
   Future<List<CartProductModel>> getAllProduct() async{
-    var dbClient = await database;
-    List<Map> maps = await dbClient.query(tableCartProduct);
+    var dbClient = (await database)!;
+    List<Map?> maps = await dbClient.query(tableCartProduct);
 
     List<CartProductModel> list = maps.isNotEmpty
-    ? maps.map((product) => CartProductModel.fromJson(product)).toList()
+    ? maps.map((product) => CartProductModel?.fromJson(product!)).toList()
     : [];
 
     return list;
@@ -49,7 +48,7 @@ class CartDatabaseHelper {
   }
 
   insert(CartProductModel model) async{
-    var dbClient = await database;
+    var dbClient = (await database)!;
     await dbClient.insert(
       tableCartProduct,
       model.tojson(),
@@ -59,7 +58,7 @@ class CartDatabaseHelper {
   }
 
   updateProduct(CartProductModel model) async{
-    var dbClient = await database;
+    var dbClient = (await database)!;
     return await dbClient.update(
       tableCartProduct,
       model.tojson(),

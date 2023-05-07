@@ -1,22 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:karima/core/view_model/cart_view_model.dart';
+import 'package:karima/model/cart_product_model.dart';
+import 'package:karima/views/checkout/checkout_view.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
 class CartView extends StatelessWidget {
 
+  List<CartProductModel>? cart;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return GetBuilder<CartViewModel>(
+      init: CartViewModel(),
+      builder: (controller) => Scaffold(
+      body: controller.cartProductModel.isEmpty
+              ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/images/cart_empty.svg",
+                    width: 200,
+                    height: 200,
+                    ),
+                  const SizedBox(height: 20,),
+                  const CustomText(
+                    alignment: Alignment.topCenter,
+                    text: "Your Cart is empty",
+                    fontSize: 32,
+                    color: Colors.grey,
+                  )
+                ],
+              )
+              : Column(
         children: [
           Expanded(
-            child: GetBuilder<CartViewModel>(
-              init: Get.find(),
-              builder: (controller) => ListView.separated(
+            child: ListView.separated(
                 itemBuilder: (context, index){
                   return SizedBox(
                     height: 140,
@@ -28,7 +49,7 @@ class CartView extends StatelessWidget {
                             children: [
                               SizedBox(
                                 width: 140,
-                                child: Image.network(controller.cartProductModel[index].image, fit: BoxFit.fill,),
+                                child: Image.network(controller.cartProductModel[index].image!, fit: BoxFit.fill,),
                                 ),
                                 SingleChildScrollView(
                                   child: Column(
@@ -37,6 +58,8 @@ class CartView extends StatelessWidget {
                                     children: [
                                       CustomText(
                                         text: controller.cartProductModel[index].name,
+                                        width: MediaQuery.of(context).size.width * 0.4,
+                                        height: 32.0,
                                         ),
                                       const SizedBox(height: 10),
                                       CustomText(
@@ -97,38 +120,39 @@ class CartView extends StatelessWidget {
                   return const SizedBox(height: 20,);
                  },
                 ),
-            ),
           ),
-          Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                const CustomText(
-                text: "TOTAL:",
-                fontSize: 20,
-              ),
-              GetBuilder<CartViewModel>(
-                builder: (controller) => CustomText(
-                  text: "\$ ${controller.totalPrice}",
-                  fontSize: 26,
-                  color: Colors.green.shade500,
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  const CustomText(
+                  text: "TOTAL:",
+                  fontSize: 20,
                 ),
+                GetBuilder<CartViewModel>(
+                  builder: (controller) => CustomText(
+                    text: "\$ ${controller.totalPrice}",
+                    fontSize: 26,
+                    color: Colors.green.shade500,
+                  ),
+                ),
+                ]
               ),
-              ]
+              CustomButton(
+                onPress: (){
+                  Get.to(CheckoutView());
+                },
+                text: "Checkout",
+              ),
+            ],
             ),
-            CustomButton(
-              onPress: (){},
-              text: "Checkout",
-            ),
-          ],
-          ),
-      ),
+        ),
         ],
+    ),
       ),
-      
     );
   }
 }

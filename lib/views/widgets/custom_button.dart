@@ -6,7 +6,8 @@ class CustomButton extends StatelessWidget {
   final Color foreground;
   final Color background;
   final double fontsize;
-  final Function onPress;
+  final Function? onPress;
+  final double pad;
 
   const CustomButton({
     this.text = "",
@@ -14,13 +15,14 @@ class CustomButton extends StatelessWidget {
     this.background = Colors.green,
     this.fontsize = 16,
     this.onPress,
+    this.pad = 16.0,
     });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
               style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(pad),
               backgroundColor: background,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -28,7 +30,7 @@ class CustomButton extends StatelessWidget {
               )
               ),
               onPressed: () {
-                onPress();
+                onPress!();
                 },
               child: CustomText(
                 text: text,

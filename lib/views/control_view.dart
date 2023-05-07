@@ -29,7 +29,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ControlViewModel>(
-      init: Get.find(),
+      init: ControlViewModel(),
       builder: (controller) => BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(

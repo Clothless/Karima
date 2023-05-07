@@ -8,7 +8,7 @@ class CustomSocialMediaButton extends StatelessWidget {
   final String asset;
   final double fontsize;
   final Alignment alignment;
-  final Function onPressed;
+  final Function? onPressed;
 
   const CustomSocialMediaButton({
     this.text = "",
@@ -38,7 +38,7 @@ class CustomSocialMediaButton extends StatelessWidget {
                 )
                 ),
                 onPressed: () {
-                  onPressed();
+                  onPressed!();
                 },
                 child: Row(
                   children: [

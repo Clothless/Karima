@@ -2,7 +2,6 @@ import 'package:karima/core/services/firestore_user.dart';
 import 'package:karima/helper/local_storage_data.dart';
 import 'package:karima/model/user_model.dart';
 import 'package:karima/views/control_view.dart';
-import 'package:karima/views/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -10,39 +9,29 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthViewModel extends GetxController {
-  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String email, password, name;
+  String? email, password, name, pic;
 
-  Rx<User> _user = Rx<User>();
+  final Rxn<User> _user = Rxn<User>();
 
-  String get user => _user.value?.email;
+  String? get user => _user.value?.email;
 
   final LocalStorageData localStorageData = Get.find();
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     _user.bindStream(_auth.authStateChanges());
+    if(_auth.currentUser != null){
+      getCurrentUserData(_auth.currentUser!.uid);
+    }
   }
 
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
 
   void googleSignInMethod() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    print(googleUser);
+    final GoogleSignInAccount googleUser = (await _googleSignIn.signIn())!;
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleUser.authentication;
 
@@ -58,7 +47,7 @@ class AuthViewModel extends GetxController {
   }
 
   void facebookSignInMethod() async {
-    final AccessToken result = await FacebookAuth.instance.login();
+    final AccessToken result = (await FacebookAuth.instance.login()) as AccessToken;
 
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(result.token);
@@ -71,23 +60,20 @@ class AuthViewModel extends GetxController {
   void signInWithEmailAndPassword(String text, String ext) async {
     try {
       await _auth.signInWithEmailAndPassword(email: text, password: ext).then((value) async{
-        await FireStoreUser().getCurrentUser(value.user.uid).then((value) {
-          setUser(UserModel.fromjson(value.data()));
-        });
+        getCurrentUserData(value.user!.uid);
       });
       Get.offAll(ControlView());
     } catch (e) {
-      print(e);
       Get.snackbar(
         'Error login account',
         e.toString(),
         colorText: Colors.black,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
     }
   }
 
-  void createAccountWithEmailAndPassword() async {
+  void createAccountWithEmailAndPassword(email, password) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -97,9 +83,8 @@ class AuthViewModel extends GetxController {
 
       Get.offAll(ControlView());
     } catch (e) {
-      print(e);
       Get.snackbar(
-        'Error login account',
+        'Error creating account',
         e.toString(),
         colorText: Colors.black,
         snackPosition: SnackPosition.BOTTOM,
@@ -109,16 +94,24 @@ class AuthViewModel extends GetxController {
 
   void saveUser(UserCredential user) async {
     UserModel userModel = UserModel(
-      userID: user.user.uid,
-      email: user.user.email,
-      name: name ?? user.user.displayName,
-      pic: '',
+      userID: user.user!.uid,
+      email: user.user!.email,
+      name: name ?? user.user!.displayName ?? "User",
+      pic: user.user!.photoURL ?? 'https://firebasestorage.googleapis.com/v0/b/karima-pfe.appspot.com/o/default-person.png?alt=media&token=eb571919-9149-4f4b-9015-7d07ec4e3507',
     );
     await FireStoreUser().addUserToFirestore(userModel);
     setUser(userModel);
   }
 
+void getCurrentUserData(String uid) async{
+  await FireStoreUser().getCurrentUser(uid).then((value) {
+    setUser(UserModel.fromjson(value.data() as Map<dynamic, dynamic>?));
+  });
+}
+
   void setUser(UserModel userModel) async{
     await localStorageData.setUser(userModel);
   }
 }
+
+

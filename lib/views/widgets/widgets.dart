@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
-  final String text;
+  final String? text;
   final double fontSize;
   final Color color;
   final Alignment alignment;
   final height;
+  final width;
   final double separator;
 
   const CustomText({
@@ -14,6 +15,7 @@ class CustomText extends StatelessWidget {
     this.color = Colors.black,
     this.alignment = Alignment.topLeft,
     this.height = null,
+    this.width = null,
     this.separator = 1.0,
     });
 
@@ -22,8 +24,9 @@ class CustomText extends StatelessWidget {
     return Container(
       alignment: alignment,
       height: height,
+      width: width,
       child: Text(
-        text,
+        text!,
         style: TextStyle(
           color: color,
           fontSize: fontSize,

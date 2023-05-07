@@ -4,26 +4,20 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:karima/core/view_model/home_view_model.dart';
+import 'package:karima/views/best_selling_view.dart';
+import 'package:karima/views/category_screen.dart';
 import 'package:karima/views/details_screen.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<String> names = <String>[
-    "test",
-    "test",
-    "test",
-    "test",
-    "test",
-    "test",
-  ];
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
-      init: Get.find(),
+      init: HomeViewModel(),
       builder: (controller) => controller.loading.value
-      ? Center(child: CircularProgressIndicator())
+      ? const Center(child: CircularProgressIndicator())
       : Scaffold(
         body: Container(
           padding: const EdgeInsets.only(top: 100, left: 20, right: 20),
@@ -37,6 +31,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: TextFormField(
                     decoration: const InputDecoration(
+                      hintText: "What are you looking for today..?",
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                      ),
                       border: InputBorder.none,
                       prefixIcon: Icon(
                         Icons.search,
@@ -57,17 +56,22 @@ class HomeScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.grey.shade100,
+                            GestureDetector(
+                              onTap: (){
+                                Get.to(CategoryScreen(model: controller.categoryModel[index],));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade100,
+                                ),
+                                height: 60,
+                                width: 60,
+                                child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.network(controller.categoryModel[index].image!),
                               ),
-                              height: 60,
-                              width: 60,
-                              child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.network(controller.categoryModel[index].image),
-                            ),
+                              ),
                             ),
                             const SizedBox(height: 20,),
                             CustomText(
@@ -83,20 +87,25 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 40,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    CustomText(
+                  children: [
+                    const CustomText(
                       text: "Best Selling",
                       fontSize: 18,
                     ),
-                    CustomText(
-                      text: "See All",
-                      fontSize: 16,
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(const BestSellingView());
+                      },
+                      child: const CustomText(
+                        text: "See All",
+                        fontSize: 16,
+                      ),
                     )
                   ],
                 ),
                 const SizedBox(height: 20,),
                 GetBuilder<HomeViewModel>(
-                  init: Get.find(),
+                  init: HomeViewModel(),
                   builder: (controller) => SizedBox(
                     height: 350,
                     child: ListView.separated(
@@ -122,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                                     child: SizedBox(
                                       height: 220,
                                       width: MediaQuery.of(context).size.width * .4,
-                                      child: Image.network(controller.productModel[index].image,)
+                                      child: Image.network(controller.productModel[index].image!,)
                                       ),
                                   ),
                                   const SizedBox(height: 20,),

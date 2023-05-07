@@ -6,9 +6,9 @@ import 'package:karima/model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageData extends GetxController{
-  Future<UserModel> get getUser async{
+  Future<UserModel?> get getUser async{
     try {
-      UserModel userModel = await _getUserData();
+      UserModel? userModel = await _getUserData();
       if(userModel == null){
         return null;
       }
@@ -21,7 +21,7 @@ class LocalStorageData extends GetxController{
   
   _getUserData() async{
     SharedPreferences pref = await SharedPreferences.getInstance();
-    var value = pref.getString(CACHED_USER_DATA);
+    var value = pref.getString(CACHED_USER_DATA)!;
     return UserModel.fromjson(json.decode(value));
   }
 

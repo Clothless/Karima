@@ -8,8 +8,9 @@ class CustomTextFormField extends StatelessWidget {
   final String hint;
   final Color color1;
   final Color color2;
-  final Function onSave;
-  final Function validator;
+  final Function? onSave;
+  final Function? validator;
+  final TextEditingController? controller;
 
   CustomTextFormField({
     this.text = "",
@@ -18,12 +19,11 @@ class CustomTextFormField extends StatelessWidget {
     this.color2 = Colors.black,
     this.onSave,
     this.validator,
-    TextEditingController controller,
+    this.controller,
     });
     
       get value => "";
     
-    final temp = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +35,9 @@ class CustomTextFormField extends StatelessWidget {
                   color: color1,
                   ),
                   TextFormField(
-                    controller: temp,
-                    onSaved: onSave(value),
-                    validator: validator(value),
+                    controller: controller,
+                    onSaved: onSave!(value),
+                    validator: validator!(value),
                     decoration: InputDecoration(
                       hintText: hint,
                       hintStyle: TextStyle(

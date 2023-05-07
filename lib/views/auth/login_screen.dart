@@ -102,8 +102,8 @@ final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
                 CustomButton(
                   onPress: () {
                     Future.delayed(Duration.zero,(){
-                      _formkey.currentState.save();
-                      if(_formkey.currentState.validate()){
+                      _formkey.currentState!.save();
+                      if(_formkey.currentState!.validate()){
                         controller.signInWithEmailAndPassword(_email.text, _password.text);
                       }
                     });

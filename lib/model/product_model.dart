@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../helper/extension.dart';
 
 class ProductModel {
-  String productID, name, image, description, size, price;
-  Color color;
+  String? productID, name, image, description, size, price, category;
+  Color? color;
 
   ProductModel({
     this.productID,
@@ -14,6 +14,7 @@ class ProductModel {
     this.color,
     this.size,
     this.price,
+    this.category
   });
 
   ProductModel.fromJson(Map<dynamic, dynamic> map){
@@ -27,6 +28,7 @@ class ProductModel {
     size = map['size'];
     price = map['price'];
     productID = map['productID'];
+    category = map['category'];
   }
 
   tojson(){
@@ -38,6 +40,7 @@ class ProductModel {
       'size': size,
       'price': price,
       'productID': productID,
+      'category': category,
    }; 
   }
 
