@@ -89,6 +89,87 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const CustomText(
+                      text: "New Arrival",
+                      fontSize: 18,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(const BestSellingView());
+                      },
+                      child: const CustomText(
+                        text: "See All",
+                        fontSize: 16,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 20,),
+                GetBuilder<HomeViewModel>(
+                  init: HomeViewModel(),
+                  builder: (controller) => SizedBox(
+                    height: 350,
+                    child: ListView.separated(
+                      itemCount: controller.productModel.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: (){
+                            Get.to(DetailsScreen(
+                              model: controller.productModel[index],
+                              ));
+                          },
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * .4,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.grey.shade100,
+                                    ),
+                                    child: SizedBox(
+                                      height: 220,
+                                      width: MediaQuery.of(context).size.width * .4,
+                                      child: Image.network(controller.productModel[index].image!,)
+                                      ),
+                                  ),
+                                  const SizedBox(height: 20,),
+                                  CustomText(
+                                    text: controller.productModel[index].name,
+                                    alignment: Alignment.bottomLeft,
+                                    height: 16.0,
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  CustomText(
+                                    height: 30.0,
+                                    text: controller.productModel[index].description,
+                                    alignment: Alignment.bottomLeft,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  CustomText(
+                                    text: "\$ ${controller.productModel[index].price}",
+                                    alignment: Alignment.bottomLeft,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(width: 20,),
+                      ),
+                  ),
+                ),
+
+
+                const SizedBox(height: 100,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CustomText(
                       text: "Best Selling",
                       fontSize: 18,
                     ),
@@ -138,6 +219,7 @@ class HomeScreen extends StatelessWidget {
                                   CustomText(
                                     text: controller.productModel[index].name,
                                     alignment: Alignment.bottomLeft,
+                                    height: 16.0,
                                   ),
                                   const SizedBox(height: 10,),
                                   CustomText(

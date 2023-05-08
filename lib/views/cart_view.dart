@@ -36,6 +36,12 @@ class CartView extends StatelessWidget {
               )
               : Column(
         children: [
+          const SizedBox(height: 50,),
+          const CustomText(
+            text: "Ready to buy!?",
+            fontSize: 24.0,
+            alignment: Alignment.center,
+          ),
           Expanded(
             child: ListView.separated(
                 itemBuilder: (context, index){
@@ -49,7 +55,7 @@ class CartView extends StatelessWidget {
                             children: [
                               SizedBox(
                                 width: 140,
-                                child: Image.network(controller.cartProductModel[index].image!, fit: BoxFit.fill,),
+                                child: Image.network(controller.cartProductModel[index].image!, fit: BoxFit.contain,),
                                 ),
                                 SingleChildScrollView(
                                   child: Column(
@@ -59,7 +65,7 @@ class CartView extends StatelessWidget {
                                       CustomText(
                                         text: controller.cartProductModel[index].name,
                                         width: MediaQuery.of(context).size.width * 0.4,
-                                        height: 32.0,
+                                        height: 16.0,
                                         ),
                                       const SizedBox(height: 10),
                                       CustomText(

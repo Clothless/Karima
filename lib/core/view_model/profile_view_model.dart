@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,8 @@ import 'package:karima/model/user_model.dart';
 class ProfileViewModel extends GetxController{
 
   ValueNotifier<bool> get loading => _loading;
-  final ValueNotifier<bool> _loading = ValueNotifier(false);
+  ValueNotifier<bool> _loading = ValueNotifier(true);
+  
   
   @override
   void onInit() {
@@ -24,6 +26,7 @@ class ProfileViewModel extends GetxController{
   void getCurrentUser() async{
     await localStorageData.getUser.then((value) {
       _userModel = value;
+      _loading = ValueNotifier(false);
     });
     update();
   }

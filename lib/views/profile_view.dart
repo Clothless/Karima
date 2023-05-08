@@ -4,6 +4,7 @@ import 'package:karima/core/view_model/profile_view_model.dart';
 import 'package:karima/views/auth/login_screen.dart';
 import 'package:karima/views/change_password_view.dart';
 import 'package:karima/views/edit_profile_view.dart';
+import 'package:karima/views/shipping_details_view.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
@@ -22,22 +23,28 @@ class ProfileView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
+                Row (
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(100)),
-                          image: DecorationImage(
-                            image: controller.userModel?.pic == ""
-                            ? NetworkImage(controller.userModel!.pic!, scale: 0.5) as ImageProvider
-                            : const AssetImage("assets/images/default-person.png",),
-                            fit: BoxFit.scaleDown,
-                            alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0,),
+                        child: Container(
+                          height: 130,
+                          width: 130,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 4,
+                              color: Colors.white
                             ),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: controller.userModel?.pic == ""
+                              ? const AssetImage("assets/images/default-person.png",)
+                              : NetworkImage(controller.userModel!.pic!) as ImageProvider,
+                              fit: BoxFit.contain,
+                              ),
+                          ),
                         ),
                       ),
                     ),
@@ -79,11 +86,11 @@ class ProfileView extends StatelessWidget {
                 ), const SizedBox(height: 20,),
                 ElevatedButton(
                   onPressed: () {
-                    
+                    Get.to(ShippingDetailsView());
                   },
                   child: ListTile(
                     title: const CustomButton(
-                      text: "Shipping Address",
+                      text: "Shipping Details",
                       foreground: Colors.black,
                       background: Colors.white,
                     ),
@@ -130,6 +137,23 @@ class ProfileView extends StatelessWidget {
                 ), const SizedBox(height: 20,),
                 ElevatedButton(
                   onPressed: () {
+                    Get.to(ChangePasswordView());
+                  },
+                  child: ListTile(
+                    title: const CustomButton(
+                      text: "Change Password",
+                      foreground: Colors.black,
+                      background: Colors.white,
+                    ),
+                    leading: Image.asset("assets/images/padlock.png"),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                      ),
+                  ),
+                ), const SizedBox(height: 20,),
+                ElevatedButton(
+                  onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -159,25 +183,6 @@ class ProfileView extends StatelessWidget {
                         );
                       }
                     );
-                    
-                  },
-                  child: ListTile(
-                    title: const CustomButton(
-                      text: "Change Password",
-                      foreground: Colors.black,
-                      background: Colors.white,
-                    ),
-                    leading: Image.asset("assets/images/padlock.png"),
-                    trailing: const Icon(
-                      Icons.navigate_next,
-                      color: Colors.black,
-                      ),
-                  ),
-                ), const SizedBox(height: 20,),
-                ElevatedButton(
-                  onPressed: () {
-                    controller.signOut();
-                    Get.offAll(LoginScreen());
                   },
                   child: ListTile(
                     title: const CustomButton(

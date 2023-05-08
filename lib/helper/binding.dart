@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:karima/core/view_model/auth_view_model.dart';
 import 'package:karima/core/view_model/checkout_view_model.dart';
 import 'package:karima/helper/local_storage_data.dart';
+import 'package:karima/views/edit_profile_view.dart';
 
 import '../core/view_model/cart_view_model.dart';
 import '../core/view_model/control_view_model.dart';
@@ -18,6 +19,7 @@ class Binding extends Bindings{
     Get.lazyPut(() => LocalStorageData());
     Get.lazyPut(() => ControlViewModel());
     Get.lazyPut(() => CheckoutViewModel());
+    Get.lazyPut(() => EditProfilePage());
   }
 
 }

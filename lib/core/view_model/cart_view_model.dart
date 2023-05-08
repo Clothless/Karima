@@ -12,6 +12,7 @@ class CartViewModel extends GetxController{
   List<CartProductModel> _cartProductModel = [];
   List<CartProductModel> get cartProductModel => _cartProductModel;
 
+
   double get totalPrice => _totalPrice;
   double _totalPrice = 0.0;
   var dbHelper = CartDatabaseHelper.db;
@@ -34,6 +35,7 @@ class CartViewModel extends GetxController{
     for(int i=0; i < _cartProductModel.length; i++){
       _totalPrice += (double.parse(_cartProductModel[i].price!) * _cartProductModel[i].quantity!);
     }
+    _totalPrice = double.parse(_totalPrice.toStringAsFixed(2));
     update();
   }
   
