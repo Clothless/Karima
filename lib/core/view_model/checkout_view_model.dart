@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:karima/views/control_view.dart';
 
 import '../../const.dart';
 import '../../helper/enum.dart';
+import '../../views/home/control_view.dart';
 
 class CheckoutViewModel extends GetxController{
   int? get processIndex => _processIndex;

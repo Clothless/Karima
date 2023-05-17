@@ -11,6 +11,9 @@ class CustomTextFormField extends StatelessWidget {
   final Function? onSave;
   final Function? validator;
   final TextEditingController? controller;
+  final bool obscureText;
+  final bool suggestion;
+  final bool autoCorrect;
 
   CustomTextFormField({
     this.text = "",
@@ -20,6 +23,9 @@ class CustomTextFormField extends StatelessWidget {
     this.onSave,
     this.validator,
     this.controller,
+    this.obscureText = false,
+    this.suggestion = false,
+    this.autoCorrect = false,
     });
     
       get value => "";
@@ -35,6 +41,9 @@ class CustomTextFormField extends StatelessWidget {
                   color: color1,
                   ),
                   TextFormField(
+                    obscureText: obscureText,
+                    enableSuggestions: suggestion,
+                    autocorrect: autoCorrect,
                     controller: controller,
                     onSaved: onSave!(value),
                     validator: validator!(value),

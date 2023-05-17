@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:karima/core/view_model/cart_view_model.dart';
 import 'package:karima/core/view_model/control_view_model.dart';
 import 'package:karima/model/cart_product_model.dart';
-import 'package:karima/views/cart_view.dart';
-import 'package:karima/views/control_view.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
 import '../const.dart';
 import '../const.dart';
 import '../model/product_model.dart';
+import 'home/control_view.dart';
 
 class DetailsScreen extends StatelessWidget {
   ProductModel? model;
@@ -56,60 +55,7 @@ class DetailsScreen extends StatelessWidget {
                       text: model!.name,
                       fontSize: 26,
                     ),
-                    const SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15,),
-                          width: MediaQuery.of(context).size.width * 0.40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: Colors.grey,
-                            )
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const CustomText(
-                                text: "Size",
-                              ),
-                              CustomText(
-                                text: model!.size,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15,),
-                          width: MediaQuery.of(context).size.width * 0.40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: Colors.grey,
-                            )
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const CustomText(
-                                text: "Color",
-                              ),
-                              Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: model!.color,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    
                     const SizedBox(height: 20,),
                     const CustomText(
                       text: "Description",
@@ -131,7 +77,7 @@ class DetailsScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 20,),
                             CustomText(
-                              text: model!.price,
+                              text: "Men\'s",
                               color: Colors.black.withOpacity(0.6),
                             )
                           ],

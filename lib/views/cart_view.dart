@@ -7,8 +7,13 @@ import 'package:karima/views/checkout/checkout_view.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
-class CartView extends StatelessWidget {
+class CartView extends StatefulWidget {
 
+  @override
+  State<CartView> createState() => _CartViewState();
+}
+
+class _CartViewState extends State<CartView> {
   List<CartProductModel>? cart;
 
   @override
@@ -108,9 +113,23 @@ class CartView extends StatelessWidget {
                                                   controller.decreaseQuantity(index);
                                                 },
                                               ),
-                                            )
+                                            ),
+                                            
                                           ]
                                         ),
+                                      ),
+                                      CustomButton(
+                                        text: "Delete",
+                                        background: Colors.red.shade400,
+                                        foreground: Colors.white,
+                                        fontsize: 14,
+                                        onPress: (){
+                                          controller.cartProductModel.removeAt(index);
+                                          controller.getTotalPrice();
+                                          setState(() {
+                                            
+                                          });
+                                        },
                                       ),
                                     ]
                                   ),

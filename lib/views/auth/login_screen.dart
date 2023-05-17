@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:karima/core/view_model/auth_view_model.dart';
 import 'package:karima/views/auth/register_screen.dart';
+import 'package:karima/views/auth/reset_password_view.dart';
 import 'package:karima/views/widgets/custom_button_social_media.dart';
 
 import '../widgets/custom_button.dart';
@@ -18,7 +19,7 @@ final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white10,
 
       ),
         body: Padding(
@@ -61,9 +62,10 @@ final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
                   const SizedBox(height: 40,),
                 
                 CustomTextFormField(
+                  suggestion: true,
                   controller: _email,
                   text: "Email",
-                  hint: "ibradzm@gmail.com",
+                  hint: "email@example.com",
                   color1: Colors.black,
                   color2: Colors.grey,
                   onSave: (value){
@@ -78,9 +80,10 @@ final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
                   ),
                 const SizedBox(height: 40,),
                 CustomTextFormField(
+                  obscureText: true,
                   controller: _password,
                   text: "Password",
-                  hint: "azerqsdf",
+                  hint: "********",
                   color1: Colors.black,
                   color2: Colors.grey,
                   onSave: (value){
@@ -93,10 +96,15 @@ final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
                   },
                 ),
                 const SizedBox(height: 10,),
-                const CustomText(
-                  text: "Forget Password?",
-                  color: Colors.black,
-                  alignment: Alignment.topRight,
+                GestureDetector(
+                  onTap: (){
+                    Get.to(ResetPasswordView());
+                  },
+                  child: const CustomText(
+                    text: "Forget Password?",
+                    color: Colors.blue,
+                    alignment: Alignment.topRight,
+                  ),
                 ),
                 const SizedBox(height: 20,),
                 CustomButton(
@@ -142,6 +150,7 @@ final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
                   foureground: Colors.black,
                   fontsize: 18,
                 ),
+                const SizedBox(height: 20,),
                 ],
               ),
             ),

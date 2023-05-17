@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../views/cart_view.dart';
-import '../../views/home_view.dart';
-import '../../views/profile_view.dart';
+import '../../views/home/home_view.dart';
+import '../../views/profile/profile_view.dart';
 
 class ControlViewModel extends GetxController {
   int _navigatorValue = 0;

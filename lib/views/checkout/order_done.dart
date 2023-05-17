@@ -4,10 +4,9 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:karima/core/view_model/control_view_model.dart';
-import 'package:karima/views/control_view.dart';
-import 'package:karima/views/home_view.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 
+import '../home/control_view.dart';
 import '../widgets/widgets.dart';
 
 class OrderDone extends StatelessWidget {

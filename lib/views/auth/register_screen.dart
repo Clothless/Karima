@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:karima/views/auth/login_screen.dart';
-import 'package:karima/views/control_view.dart';
-import 'package:karima/views/home_view.dart';
 import '../../core/view_model/auth_view_model.dart';
+import '../home/control_view.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/widgets.dart';
@@ -30,7 +27,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white10,
 
       ),
         body: Padding(
@@ -92,7 +89,7 @@ class RegisterScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: email,
                   text: "Email",
-                  hint: "ibradzm@gmail.com",
+                  hint: "email@example.com",
                   color1: Colors.black,
                   color2: Colors.grey,
                   onSave: (value){},
@@ -100,9 +97,10 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 const SizedBox(height: 40,),
                 CustomTextFormField(
+                  obscureText: true,
                   controller: password,
                   text: "Password",
-                  hint: "azerqsdf",
+                  hint: "********",
                   color1: Colors.black,
                   color2: Colors.grey,
                   onSave: (value){

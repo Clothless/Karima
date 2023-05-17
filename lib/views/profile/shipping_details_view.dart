@@ -6,8 +6,9 @@ import 'package:karima/views/widgets/custom_button.dart';
 import 'package:karima/views/widgets/custom_text_form_field.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
-import '../core/services/firestore_user.dart';
-import '../core/view_model/profile_view_model.dart';
+import '../../core/services/firestore_user.dart';
+import '../../core/view_model/profile_view_model.dart';
+
 
 class ShippingDetailsView extends StatelessWidget {
   

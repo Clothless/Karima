@@ -9,7 +9,6 @@ import 'package:karima/core/services/firestore_user.dart';
 import 'package:karima/core/view_model/auth_view_model.dart';
 import 'package:karima/core/view_model/profile_view_model.dart';
 import 'package:karima/model/user_model.dart';
-import 'package:karima/views/profile_view.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 
 class EditProfilePage extends StatefulWidget {

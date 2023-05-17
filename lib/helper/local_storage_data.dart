@@ -14,7 +14,6 @@ class LocalStorageData extends GetxController{
       }
       return userModel;
     } catch (e) {
-        print(e.toString());
         return null;
     }
   }

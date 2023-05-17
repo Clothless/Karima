@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:karima/views/widgets/custom_button.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
-import '../core/view_model/cart_view_model.dart';
-import '../core/view_model/home_view_model.dart';
-import '../model/cart_product_model.dart';
+import '../../core/view_model/cart_view_model.dart';
+import '../../core/view_model/home_view_model.dart';
+import '../../model/cart_product_model.dart';
 
 class BestSellingView extends StatelessWidget {
   const BestSellingView({super.key});
@@ -21,7 +21,11 @@ class BestSellingView extends StatelessWidget {
           
           child: Column(
             children: [
-              
+              const CustomText(
+                text: "Discover",
+                alignment: Alignment.center,
+                fontSize: 32,
+              ), const SizedBox(height: 10,),
                   Expanded(
                   child: ListView.separated(
                       itemBuilder: (context, index){

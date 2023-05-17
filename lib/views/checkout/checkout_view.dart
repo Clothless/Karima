@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:karima/core/services/database/cart_database_helper.dart';
 import 'package:karima/core/view_model/auth_view_model.dart';
 import 'package:karima/core/view_model/cart_view_model.dart';
 import 'package:karima/core/view_model/profile_view_model.dart';
@@ -12,6 +14,7 @@ import 'package:karima/model/user_model.dart';
 import 'package:karima/views/checkout/order_done.dart';
 import 'package:karima/views/widgets/widgets.dart';
 
+import '../../model/order_model.dart';
 import '../../model/product_model.dart';
 import '../widgets/custom_button.dart';
 
@@ -23,13 +26,16 @@ class CheckoutView extends StatefulWidget {
 class _CheckoutViewState extends State<CheckoutView> {
   final now = DateTime.now();
 
-  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('Users');
+  final ab = FirebaseAuth.instance.currentUser?.uid;
 
-  Future<void> addProductToOrder(CartProductModel productModel, String uid) async{
-    return await usersCollection.doc(uid).collection("Cart").doc(productModel.productID).set(productModel.tojson());
+  final CollectionReference orderCollection = FirebaseFirestore.instance.collection('Orders');
+
+  Future<void> addProductToOrder(OrderModel orderModel) async{
+    return await orderCollection.doc(orderModel.orderID).set(orderModel.toJson());
     
   }
 
+  
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +99,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                                 ),
                               ),
                               CustomText(
-                                text: 'X ${controller.cartProductModel[index].quantity.toString()}',
+                                text: "X ${controller.cartProductModel[index].quantity}",
                                 alignment: Alignment.centerRight,
                                 ),
                               CustomText(
@@ -143,7 +149,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               fontSize: 20.0,
                             ), 
                             CustomText(
-                              text: controller.userModel!.fullName!,
+                              text: controller.userModel?.name!,
                               fontSize: 16.0,
                             ),
                         ]),
@@ -154,7 +160,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               fontSize: 20.0,
                             ), 
                             CustomText(
-                              text: controller.userModel!.address,
+                              text: "",
                               fontSize: 16.0,
                             ),
                         ]),
@@ -165,7 +171,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               fontSize: 20.0,
                             ), 
                             CustomText(
-                              text: controller.userModel!.province,
+                              text: "",
                               fontSize: 16.0,
                             ),
                         ]),
@@ -176,7 +182,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               fontSize: 20.0,
                             ), 
                             CustomText(
-                              text: controller.userModel!.postalCode,
+                              text: "",
                               fontSize: 16.0,
                             ),
                         ]),
@@ -206,15 +212,32 @@ class _CheckoutViewState extends State<CheckoutView> {
                 ]
               ),
               const SizedBox(height: 20,),
-              GetBuilder<ProfileViewModel>(
+              GetBuilder<CartViewModel>(
                 builder: (context) {
                   return CustomButton(
-                    onPress: (){
-                      for(int i=0; i<controller.cartProductModel.length; i++){
-                      addProductToOrder(controller.cartProductModel[i], context.userModel!.userID!);
+                    onPress: () async{
+                      List<String> names = [];
+                      List<String> prices = [];
+                      List<int> quantities = [];
+                        for(int i = 0; i<context.cartProductModel.length; i++){
+                          names.add(context.cartProductModel[i].name!);
+                          prices.add(context.cartProductModel[i].price!);
+                          quantities.add(context.cartProductModel[i].quantity!);
+                        }
+                        print("this is it:");
+                      DateTime now = DateTime.now();
+                      OrderModel xa = OrderModel(
+                        orderID: ab! + now.toString(),
+                        date: now.toString().substring(0, 10),
+                        totalPrice: controller.totalPrice.toString(),
+                        names: names,
+                        quantities: quantities,
+                        prices: prices,
+                        userID: ab,
+                      );
+                      addProductToOrder(xa);
                       Get.to(OrderDone());
-                      }
-                    },
+                      },
                     text: "Confirm Order",
                   );
                 }
