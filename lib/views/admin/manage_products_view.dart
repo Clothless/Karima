@@ -79,7 +79,7 @@ class _ManageProductsViewState extends State<ManageProductsView> {
                                                 ),
                                               const SizedBox(height: 10,),
                                               CustomText(
-                                                text: '\$ ${controller.productModel[index].price!}',
+                                                text: ' ${controller.productModel[index].price!} DZD',
                                                 color: Colors.green,
                                                 ),
                                               const SizedBox(height: 10),

@@ -160,7 +160,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                             alignment: Alignment.centerRight,
                                             ),
                                           CustomText(
-                                            text: '\$ ${controller.fin[i].toJson()['prices'][index]}',
+                                            text: '${controller.fin[i].toJson()['prices'][index]} DZD',
                                             alignment: Alignment.centerRight,
                                             ),
                                         ]

@@ -130,7 +130,7 @@ class DetailsScreen extends StatelessWidget {
                         fontSize: 20,
                       ),
                       CustomText(
-                        text: "\$ ${model!.price}",
+                        text: "${model!.price} DZD",
                         fontSize: 26,
                         color: Colors.green.shade500,
                       ),

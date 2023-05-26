@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:karima/core/view_model/home_view_model.dart';
 import 'package:karima/views/category_screen.dart';
 import 'package:karima/views/details_screen.dart';
@@ -11,7 +12,14 @@ import 'package:karima/views/widgets/widgets.dart';
 
 import 'best_selling_view.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.grey.shade200,
                   ),
                   child: TextFormField(
+                    
                     decoration: const InputDecoration(
                       hintText: "What are you looking for today..?",
                       hintStyle: TextStyle(
@@ -151,7 +160,7 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10,),
                                   CustomText(
-                                    text: "\$ ${controller.productModel[index].price}",
+                                    text: "${controller.productModel[index].price} DZD",
                                     alignment: Alignment.bottomLeft,
                                     color: Colors.green,
                                   ),
@@ -165,7 +174,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                   ),
                 ),
-
+        
               ],
               
             ),
@@ -175,4 +184,7 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  
+
 }

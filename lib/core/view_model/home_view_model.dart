@@ -14,6 +14,8 @@ class HomeViewModel extends GetxController{
   final List<CategoryModel> _categoryModel = [];
   List<ProductModel> get productModel => _productModel;
   final List<ProductModel> _productModel = [];
+  List<String> get productNames => _productNames;
+  final List<String> _productNames = [];
 
   HomeViewModel(){
     getCategory();
@@ -37,6 +39,7 @@ class HomeViewModel extends GetxController{
       for(int i = 0; i < value.length; i++){
         _productModel.add(ProductModel.fromJson(value[i].data() as Map<dynamic, dynamic>));
       _loading.value = false;
+      _productNames.add(_productModel[i].name!);
       }
       update();
     });

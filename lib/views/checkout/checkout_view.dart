@@ -103,7 +103,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                                 alignment: Alignment.centerRight,
                                 ),
                               CustomText(
-                                text: '\$ ${controller.cartProductModel[index].price}',
+                                text: '${controller.cartProductModel[index].price} DZD',
                                 alignment: Alignment.centerRight,
                                 ),
                             ]

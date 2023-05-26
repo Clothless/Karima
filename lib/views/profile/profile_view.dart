@@ -325,9 +325,7 @@ class ProfileView extends StatelessWidget {
                       
             
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15)
-                    ),
+                    
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.green),

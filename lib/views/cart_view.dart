@@ -74,7 +74,7 @@ class _CartViewState extends State<CartView> {
                                         ),
                                       const SizedBox(height: 10),
                                       CustomText(
-                                        text: "\$${controller.cartProductModel[index].price}",
+                                        text: " ${controller.cartProductModel[index].price} DZD",
                                         color: Colors.green,
                                         ),
                                       const SizedBox(height: 10),
@@ -159,7 +159,7 @@ class _CartViewState extends State<CartView> {
                 ),
                 GetBuilder<CartViewModel>(
                   builder: (controller) => CustomText(
-                    text: "\$ ${controller.totalPrice}",
+                    text: "${controller.totalPrice} DZD",
                     fontSize: 26,
                     color: Colors.green.shade500,
                   ),
